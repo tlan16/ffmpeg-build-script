@@ -319,6 +319,14 @@ if build "fdk_aac"; then
 	build_done "fdk_aac"
 fi
 
+if build "openssl"; then
+	download "https://www.openssl.org/source/openssl-1.1.0h.tar.gz" "/openssl-1.1.0h.tar.gz"
+	cd $PACKAGES/openssl-1.1.0f || exit
+	execute ./config --prefix=${WORKSPACE} no-shared
+	execute make -j $MJOBS
+	execute make install
+	build_done "openssl"
+fi
 
 build "ffmpeg"
 download "http://ffmpeg.org/releases/ffmpeg-4.0.tar.bz2" "ffmpeg-snapshot.tar.bz2"
@@ -351,7 +359,8 @@ cd $PACKAGES/ffmpeg-4.0 || exit
 	--enable-libopencore_amrwb \
 	--enable-libopencore_amrnb \
 	--enable-filters \
-	--enable-libvidstab
+	--enable-libvidstab \
+	--enable-openssl
 	# enable all filters
 	# enable AAC de/encoding via libfdk-aac [no]
 	# enable detecting cpu capabilities at runtime (smaller binary)
@@ -361,6 +370,7 @@ cd $PACKAGES/ffmpeg-4.0 || exit
 	# enable Theora encoding via libtheora [no]
 	# enable MP3 encoding via libmp3lame [no]
 	# enable VP8 and VP9 de/encoding via libvpx [no]
+	# enable OpenSSL [no]
 	# enable pthreads [autodetect]
 	# allow use of nonfree code, the resulting libs and binaries will be unredistributable [no]
 	# upgrade (L)GPL to version 3 [no]
