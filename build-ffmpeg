@@ -321,7 +321,7 @@ fi
 
 if build "openssl"; then
 	download "https://www.openssl.org/source/openssl-1.1.0h.tar.gz" "/openssl-1.1.0h.tar.gz"
-	cd $PACKAGES/openssl-1.1.0f || exit
+	cd $PACKAGES/openssl-1.1.0h || exit
 	execute ./config --prefix=${WORKSPACE} no-shared
 	execute make -j $MJOBS
 	execute make install
@@ -361,6 +361,7 @@ cd $PACKAGES/ffmpeg-4.0 || exit
 	--enable-filters \
 	--enable-libvidstab \
 	--enable-openssl
+	--enable-nvenc
 	# enable all filters
 	# enable AAC de/encoding via libfdk-aac [no]
 	# enable detecting cpu capabilities at runtime (smaller binary)
